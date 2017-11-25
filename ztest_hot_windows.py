@@ -14,13 +14,13 @@ class TestStringMethods(unittest.TestCase):
     def test_01_ev(self):
         (svc, X_scaler) = class_train.load()
         
-        image = mpimg.imread('test_images/test3.jpg')
+        image = mpimg.imread('test_images/test6.jpg')
         draw_image = np.copy(image)
         image = image.astype(np.float32)/255
         
         (hw,di) = hot_windows.hot_wins(image, draw_image, svc, X_scaler)
         print(hw)
-        mpimg.imsave("unit_test/test3.jpg",di)
+        mpimg.imsave("unit_test/test6.jpg",di)
  
 
 if __name__ == '__main__':

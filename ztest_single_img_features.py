@@ -9,6 +9,7 @@ import features
 import glob
 from features import single_img_features
 import sys
+import cnst
 
 
 
@@ -20,7 +21,12 @@ class TestStringMethods(unittest.TestCase):
         for i in images:
             img = mpimg.imread(i)
             test_img = cv2.resize(img, (64, 64))  
-            features = single_img_features(test_img)
+            features = single_img_features(test_img,color_space=cnst.color_space, 
+                            spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
+                            orient=cnst.orient, pix_per_cell=cnst.pix_per_cell, 
+                            cell_per_block=cnst.cell_per_block, 
+                            hog_channel=cnst.hog_channel, spatial_feat=cnst.spatial_feat, 
+                            hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
             print(features.shape)
             test_features = scaler.transform(np.array(features).reshape(1, -1))
             #test_features = features

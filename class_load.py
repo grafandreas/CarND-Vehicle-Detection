@@ -1,4 +1,5 @@
 import glob
+import cnst
 
     # Read in cars and notcars
 def load():

@@ -24,7 +24,7 @@ class TestVideo(unittest.TestCase):
 
     def test_pipe(self):
        
-        uut.process(IMG_DIR,TEST_OUT+"/L"+IMG_DIR,cb_ok,subC=(5,7))
+        uut.process(IMG_DIR,TEST_OUT+"/L"+IMG_DIR,cb_ok)#,subC=(5,7))
 
   
         

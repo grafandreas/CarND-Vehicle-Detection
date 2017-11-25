@@ -10,35 +10,26 @@ import time
 import numpy as np
 import cv2
 import pickle
+import cnst
 
 def train():
     (cars,notcars) = class_load.load()
     
-    ### TODO: Tweak these parameters and see how the results change.
-    color_space = 'RGB' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
-    orient = 9  # HOG orientations
-    pix_per_cell = 8 # HOG pixels per cell
-    cell_per_block = 2 # HOG cells per block
-    hog_channel = 0 # Can be 0, 1, 2, or "ALL"
-    spatial_size = (16, 16) # Spatial binning dimensions
-    hist_bins = 16    # Number of histogram bins
-    spatial_feat = True # Spatial features on or off
-    hist_feat = True # Histogram features on or off
-    hog_feat = True # HOG features on or off
+
     
     
-    car_features = extract_features(cars, color_space=color_space, 
-                            spatial_size=spatial_size, hist_bins=hist_bins, 
-                            orient=orient, pix_per_cell=pix_per_cell, 
-                            cell_per_block=cell_per_block, 
-                            hog_channel=hog_channel, spatial_feat=spatial_feat, 
-                            hist_feat=hist_feat, hog_feat=hog_feat)
-    notcar_features = extract_features(notcars, color_space=color_space, 
-                            spatial_size=spatial_size, hist_bins=hist_bins, 
-                            orient=orient, pix_per_cell=pix_per_cell, 
-                            cell_per_block=cell_per_block, 
-                            hog_channel=hog_channel, spatial_feat=spatial_feat, 
-                            hist_feat=hist_feat, hog_feat=hog_feat)
+    car_features = extract_features(cars, color_space=cnst.color_space, 
+                            spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
+                            orient=cnst.orient, pix_per_cell=cnst.pix_per_cell, 
+                            cell_per_block=cnst.cell_per_block, 
+                            hog_channel=cnst.hog_channel, spatial_feat=cnst.spatial_feat, 
+                            hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
+    notcar_features = extract_features(notcars, color_space=cnst.color_space, 
+                            spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
+                            orient=cnst.orient, pix_per_cell=cnst.pix_per_cell, 
+                            cell_per_block=cnst.cell_per_block, 
+                            hog_channel=cnst.hog_channel, spatial_feat=cnst.spatial_feat, 
+                            hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
     
     X = np.vstack((car_features, notcar_features)).astype(np.float64)                        
     # Fit a per-column scaler
@@ -55,9 +46,11 @@ def train():
     X_train, X_test, y_train, y_test = train_test_split(
         scaled_X, y, test_size=0.2, random_state=rand_state)
     
-    print('Using:',orient,'orientations',pix_per_cell,
-        'pixels per cell and', cell_per_block,'cells per block')
+    print('Using:',cnst.orient,'orientations',cnst.pix_per_cell,
+        'pixels per cell and', cnst.cell_per_block,'cells per block')
+    print(len(X_train))
     print('Feature vector length:', len(X_train[0]))
+    print('Feature vector length:', len(X_train[1]))
     # Use a linear SVC 
     svc = LinearSVC()
     # Check the training time for the SVC
