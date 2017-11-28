@@ -33,6 +33,31 @@ class Rectangles:
                     res.append(x)
         return res
     
+    def cluster(self,l):
+        to_process = list(l)
+        res=[]
+        loopFlag=True
+        while len(to_process)>0 :
+            p = to_process[0]
+            to_process
+            rmv=[p]
+#             print(".")
+#             print(p)
+            for i in range(1,len(to_process)):
+                o = to_process[i]
+#                 print(o)
+#                 print(self.intersect(p, o))
+                if self.intersect(p, o) is not None:
+                    p=[np.min([p[0],o[0]]),
+                       np.min([p[1],o[1]]),
+                       np.max([p[2],o[2]]),
+                       np.max([p[3],o[3]])
+                       ]
+                    rmv.append(o)
+            res.append(p)
+            to_process = [x for x in to_process if x not in rmv]
+        return res
+    
         
     def __init__(self):
         '''

@@ -1,7 +1,8 @@
 import matplotlib.image as mpimg
 import numpy as np
 import cv2
-from lesson_functions import extract_features, bin_spatial, color_hist, get_hog_features, draw_boxes, slide_window
+from lesson_functions import  bin_spatial, color_hist, get_hog_features, draw_boxes, slide_window
+import cnst
 
 # Define a function to extract features from a single image window
 # This function is very similar to extract_features()
@@ -84,7 +85,24 @@ def search_windows(img, windows, clf, scaler, color_space='RGB',
     #8) Return windows for positive detections
     return on_windows
     
+# Define a function to extract features from a list of images
+# Have this function call bin_spatial() and color_hist()
+def extract_features(imgs, color_space='RGB', spatial_size=(32, 32),
+                        hist_bins=32, orient=9, 
+                        pix_per_cell=8, cell_per_block=2, hog_channel=0,
+                        spatial_feat=True, hist_feat=True, hog_feat=True):
+    # Create a list to append feature vectors to
+    features = []
+    # Iterate through the list of images
+    for file in imgs:
+        
+        # Read in each one by one
+        image = cnst.img_read_f(file)
 
+        f = single_img_features(image, color_space, spatial_size, hist_bins, orient, pix_per_cell, cell_per_block, hog_channel, spatial_feat, hist_feat, hog_feat)
+        features.append(f)
+    # Return list of feature vectors
+    return features
 
 image = mpimg.imread('test_images/test1.jpg')
 draw_image = np.copy(image)

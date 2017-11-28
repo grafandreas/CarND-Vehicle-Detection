@@ -3,8 +3,9 @@ from skimage.feature import hog
 import glob
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import  LinearSVC
-import lesson_functions 
-from lesson_functions import extract_features, bin_spatial, color_hist, get_hog_features, draw_boxes, slide_window
+import lesson_functions
+from features import  extract_features 
+from lesson_functions import bin_spatial, color_hist, get_hog_features, draw_boxes, slide_window
 from sklearn.model_selection import  train_test_split
 import time
 import numpy as np
@@ -31,6 +32,9 @@ def train():
                             hog_channel=cnst.hog_channel, spatial_feat=cnst.spatial_feat, 
                             hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
     
+    print(cars[0])
+    print(car_features[0])
+    print(len(car_features))
     X = np.vstack((car_features, notcar_features)).astype(np.float64)                        
     # Fit a per-column scaler
     X_scaler = StandardScaler().fit(X)

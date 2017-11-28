@@ -35,6 +35,16 @@ class RectanglesTest(unittest.TestCase):
         r = rs.intersectList([[0,1,9,10], [5,6,14,15]],[[6,7,7,8]])
         self.assertEqual(2, len(r))
         
+    def test_Cluster1(self):
+        rs = rectangles.Rectangles()
+        r= rs.cluster([[0,1,9,10], [0,1,9,10]])
+        self.assertEqual([[0,1,9,10]],r)
+        
+    def test_Cluster2(self):
+        rs = rectangles.Rectangles()
+        r= rs.cluster([[0,1,9,10], [2,3,11,12]])
+        self.assertEqual([[0,1,11,12]],r)
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

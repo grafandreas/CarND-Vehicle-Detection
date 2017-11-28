@@ -48,18 +48,29 @@ class Hotspots:
     def getLayers(self):
         return self.layers
     
-    def drawHotspots(self,width,height):
-        blank_image = np.zeros((height,width,3), np.uint8)
+    def drawHotspots(self,width,height,blank_image=None):
+        if blank_image is None:
+            blank_image = np.zeros((height,width,3), np.uint8)
+            
         clevl = int(255 / self.heat)
         print(clevl)
         for i,l in enumerate(self.layers):
             for r in l:
                 color= (clevl*(i+1),clevl*(i+1),0)
                 print(color)
+                print(r)
                 cv2.rectangle(blank_image,(r[0],r[1]),(r[2],r[3]),
                               color,1)
         return blank_image
     
+    def drawFound(self,width,height,blank_image=None):
+        if blank_image is None:
+            blank_image = np.zeros((height,width,3), np.uint8)
+        
+        cl = self.rs.cluster(self.layers[self.heat-1])
+        for r in cl:
+            cv2.rectangle(blank_image,(r[0],r[1]),(r[2],r[3]),
+                              (255,0,0),5)
     
     def __init__(self,history_size=10,heat=3):
         '''
