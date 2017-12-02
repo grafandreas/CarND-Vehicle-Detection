@@ -17,18 +17,19 @@ def train():
     (cars,notcars) = class_load.load()
     return train_p(cars,notcars,cnst.color_space)
     
-def train_p(cars,notcars,color_space=cnst.color_space,torient=cnst.orient,thog_channel=cnst.hog_channel):
+def train_p(cars,notcars,color_space=cnst.color_space,torient=cnst.orient,thog_channel=cnst.hog_channel,
+            tpix_per_cell = cnst.pix_per_cell, tcell_per_block=cnst.cell_per_block):
 
     car_features = extract_features(cars, color_space, 
                             spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
-                            orient=torient, pix_per_cell=cnst.pix_per_cell, 
-                            cell_per_block=cnst.cell_per_block, 
+                            orient=torient, pix_per_cell=tpix_per_cell, 
+                            cell_per_block=tcell_per_block, 
                             hog_channel=thog_channel, spatial_feat=cnst.spatial_feat, 
                             hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
     notcar_features = extract_features(notcars, color_space, 
                             spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
-                            orient=torient, pix_per_cell=cnst.pix_per_cell, 
-                            cell_per_block=cnst.cell_per_block, 
+                            orient=torient, pix_per_cell=tpix_per_cell, 
+                            cell_per_block=tcell_per_block, 
                             hog_channel=thog_channel, spatial_feat=cnst.spatial_feat, 
                             hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
     

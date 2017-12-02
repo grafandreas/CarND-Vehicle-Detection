@@ -8,7 +8,7 @@ import itertools
 
 class TestStringMethods(unittest.TestCase):
     
-    def xtest_01_train(self):
+    def test_01_train(self):
         print(sys.version)
         svc= class_train.train()
         
@@ -20,17 +20,18 @@ class TestStringMethods(unittest.TestCase):
         self.assertIs(type(r[0]), sklearn.svm.classes.LinearSVC )
         self.assertIs(type(r[1]), sklearn.preprocessing.data.StandardScaler)
 
-    def test_01_colorspace(self):
+    def xtest_01_parameter_eval(self):
         print(sys.version)
         (c,nc) = class_load.load()
-        B=[['RGB','YCrCb','YUV','HLS','LUV','HSV'],[9],[0,1,2,'ALL']]
+#         B=[['RGB','YCrCb','YUV','HLS','LUV','HSV'],[9],[0,1,2,'ALL'],[8],[2]]
+        B=[['YUV'],[13],['ALL'],[8],[2]]
         combis = list(itertools.product(*B))
         print(combis)
         accs = []
         
         for cs in combis:
             print(cs)
-            (svc,a)= class_train.train_p(c,nc,cs[0],cs[1],cs[2])
+            (svc,a)= class_train.train_p(c,nc,cs[0],cs[1],cs[2],cs[3],cs[4])
             accs.append(a)
          
         for i in range(len(combis)):

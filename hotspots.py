@@ -7,6 +7,7 @@ Created on 25.11.2017
 import rectangles
 import numpy as np
 import cv2
+from collections import deque
 
 class Hotspots:
     '''
@@ -15,8 +16,6 @@ class Hotspots:
     
     def push(self,rl):
         self.history.append(rl)
-        if(len(self.history)>self.history_size):
-            self.history.pop(0)
     
     def getHistory(self):
         return self.history
@@ -77,8 +76,7 @@ class Hotspots:
         Constructor
         '''
         self.rs = rectangles.Rectangles()
-        self.history = []
-        self.history_size = history_size
+        self.history = deque(maxlen=history_size)
         self.heat = heat
         
         

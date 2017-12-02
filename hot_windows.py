@@ -7,6 +7,8 @@ import hotspots
 
 hs = hotspots.Hotspots(history_size=5,heat=5)
 
+frame_cnt = 0
+
 def hot_wins(image,draw_image, svc, X_scaler, xy_window=(96, 96), xy_overlap=(0.5, 0.5),):
 
     
@@ -27,26 +29,30 @@ def hot_wins(image,draw_image, svc, X_scaler, xy_window=(96, 96), xy_overlap=(0.
 
 def multi_hot_wins(image,draw_image, svc, X_scaler, sizes, xy_overlap=(0.5, 0.5)):
     hot_windows=[]
-    for s in sizes:
-        (hw,di) = hot_wins(image, draw_image, svc, X_scaler,(s,s),xy_overlap)
-        hot_windows.append(hw)
-        
-#     print(hot_windows)
-    w2=[]
-    for e in hot_windows:
-        if(len(e)>0):
-            e = e[0]
-    #         print(e)
-    #         print(e[0][0])
-    #         print(e[1][1])
-            w2.append([e[0][0],e[0][1],e[1][0],e[1][1]])
-#     print("--")
-#     print(w2)
-    hs.push(w2)
-    hs.calcHotspots()
+    di=draw_image
+    
+    if frame_cnt % cnst.every_nth_frame == 0:
+        for s in sizes:
+            (hw,di) = hot_wins(image, draw_image, svc, X_scaler,(s,s),xy_overlap)
+            hot_windows.append(hw)
+            
+    #     print(hot_windows)
+        w2=[]
+        for e in hot_windows:
+            if(len(e)>0):
+                e = e[0]
+        #         print(e)
+        #         print(e[0][0])
+        #         print(e[1][1])
+                w2.append([e[0][0],e[0][1],e[1][0],e[1][1]])
+    #     print("--")
+    #     print(w2)
+        hs.push(w2)
+        hs.calcHotspots()
 #     print(hs.getHistory())
 #     print(hs.getLayers())
 #     hs.drawHotspots(1280, 720,di)
     hs.drawFound(1280, 720,di)
+    frame_cnt = frame_cnt+1
     return hot_windows,di
         
