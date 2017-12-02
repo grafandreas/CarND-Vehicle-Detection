@@ -4,7 +4,7 @@ from features import bin_spatial, search_windows
 import cnst
 
 import hotspots
-
+import time
 hs = hotspots.Hotspots(history_size=5,heat=5)
 
 frame_cnt = 0
@@ -12,7 +12,7 @@ frame_cnt = 0
 def hot_wins(image,draw_image, svc, X_scaler, xy_window=(96, 96), xy_overlap=(0.5, 0.5),):
 
     
-    windows = slide_window(image, x_start_stop=[None, None], y_start_stop=cnst.y_start_stop, 
+    windows = slide_window(image, x_start_stop=[640, 1280], y_start_stop=cnst.y_start_stop, 
                         xy_window=xy_window, xy_overlap=xy_overlap)
     
     hot_windows = search_windows(image, windows, svc, X_scaler, color_space=cnst.color_space, 
@@ -31,7 +31,11 @@ def multi_hot_wins(image,draw_image, svc, X_scaler, sizes, xy_overlap=(0.5, 0.5)
     hot_windows=[]
     di=draw_image
     
-    if frame_cnt % cnst.every_nth_frame == 0:
+    print("---")
+    print(multi_hot_wins.frame_cnt)
+    print(cnst.every_nth_frame)
+    print(multi_hot_wins.frame_cnt % cnst.every_nth_frame)
+    if multi_hot_wins.frame_cnt % cnst.every_nth_frame == 0: 
         for s in sizes:
             (hw,di) = hot_wins(image, draw_image, svc, X_scaler,(s,s),xy_overlap)
             hot_windows.append(hw)
@@ -48,11 +52,19 @@ def multi_hot_wins(image,draw_image, svc, X_scaler, sizes, xy_overlap=(0.5, 0.5)
     #     print("--")
     #     print(w2)
         hs.push(w2)
+        t=time.time()
         hs.calcHotspots()
+        t2=time.time()
+        print(t2-t)
+    else:
+        print(".")
 #     print(hs.getHistory())
 #     print(hs.getLayers())
 #     hs.drawHotspots(1280, 720,di)
     hs.drawFound(1280, 720,di)
-    frame_cnt = frame_cnt+1
+    multi_hot_wins.frame_cnt = multi_hot_wins.frame_cnt+1
     return hot_windows,di
-        
+       
+       
+       
+multi_hot_wins.frame_cnt = 0 

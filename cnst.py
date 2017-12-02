@@ -14,6 +14,7 @@ hist_feat = True # Histogram features on or off
 hog_feat = True # HOG features on or off
 sizes = [160,144,128,112,96]
 every_nth_frame=3
+frame_cnt = 0
 #sizes = [96,112,128,144,160]
 #sizes = [32,48,64,80,96,112,128,144,160]
 img_dimensions=(1280,720)
