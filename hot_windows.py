@@ -31,10 +31,10 @@ def multi_hot_wins(image,draw_image, svc, X_scaler, sizes, xy_overlap=(0.5, 0.5)
     hot_windows=[]
     di=draw_image
     
-    print("---")
-    print(multi_hot_wins.frame_cnt)
-    print(cnst.every_nth_frame)
-    print(multi_hot_wins.frame_cnt % cnst.every_nth_frame)
+#     print("---")
+#     print(multi_hot_wins.frame_cnt)
+#     print(cnst.every_nth_frame)
+#     print(multi_hot_wins.frame_cnt % cnst.every_nth_frame)
     if multi_hot_wins.frame_cnt % cnst.every_nth_frame == 0: 
         for s in sizes:
             (hw,di) = hot_wins(image, draw_image, svc, X_scaler,(s,s),xy_overlap)
@@ -55,9 +55,9 @@ def multi_hot_wins(image,draw_image, svc, X_scaler, sizes, xy_overlap=(0.5, 0.5)
         t=time.time()
         hs.calcHotspots()
         t2=time.time()
-        print(t2-t)
-    else:
-        print(".")
+#         print(t2-t)
+#     else:
+#         print(".")
 #     print(hs.getHistory())
 #     print(hs.getLayers())
 #     hs.drawHotspots(1280, 720,di)

@@ -87,12 +87,12 @@ class Hotspots:
             blank_image = np.zeros((height,width,3), np.uint8)
             
         clevl = int(255 / self.heat)
-        print(clevl)
+#         print(clevl)
         for i,l in enumerate(self.layers):
             for r in l:
                 color= (clevl*(i+1),clevl*(i+1),0)
-                print(color)
-                print(r)
+#                 print(color)
+#                 print(r)
                 cv2.rectangle(blank_image,(r[0],r[1]),(r[2],r[3]),
                               color,1)
         return blank_image
@@ -107,11 +107,11 @@ class Hotspots:
                               (255,0,0),5)
             
     def drawFound(self,width,height,blank_image=None):
-        print(blank_image.shape)
-        print(self.heatmap.shape)
+#         print(blank_image.shape)
+#         print(self.heatmap.shape)
 #         cv2.addWeighted(blank_image, 1, self.heatmap, 0.3, 0)
         for r in self.boxes:
-            print(r)
+#             print(r)
             cv2.rectangle(blank_image,(r[0][0],r[0][1]),(r[1][0],r[1][1]),
                               (255,0,0),5)
     
