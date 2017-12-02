@@ -15,21 +15,21 @@ import cnst
 
 def train():
     (cars,notcars) = class_load.load()
+    return train_p(cars,notcars,cnst.color_space)
     
+def train_p(cars,notcars,color_space=cnst.color_space,torient=cnst.orient,thog_channel=cnst.hog_channel):
 
-    
-    
-    car_features = extract_features(cars, color_space=cnst.color_space, 
+    car_features = extract_features(cars, color_space, 
                             spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
-                            orient=cnst.orient, pix_per_cell=cnst.pix_per_cell, 
+                            orient=torient, pix_per_cell=cnst.pix_per_cell, 
                             cell_per_block=cnst.cell_per_block, 
-                            hog_channel=cnst.hog_channel, spatial_feat=cnst.spatial_feat, 
+                            hog_channel=thog_channel, spatial_feat=cnst.spatial_feat, 
                             hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
-    notcar_features = extract_features(notcars, color_space=cnst.color_space, 
+    notcar_features = extract_features(notcars, color_space, 
                             spatial_size=cnst.spatial_size, hist_bins=cnst.hist_bins, 
-                            orient=cnst.orient, pix_per_cell=cnst.pix_per_cell, 
+                            orient=torient, pix_per_cell=cnst.pix_per_cell, 
                             cell_per_block=cnst.cell_per_block, 
-                            hog_channel=cnst.hog_channel, spatial_feat=cnst.spatial_feat, 
+                            hog_channel=thog_channel, spatial_feat=cnst.spatial_feat, 
                             hist_feat=cnst.hist_feat, hog_feat=cnst.hog_feat)
     
     print(cars[0])
@@ -63,12 +63,13 @@ def train():
     t2 = time.time()
     print(round(t2-t, 2), 'Seconds to train SVC...')
     # Check the score of the SVC
-    print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
+    accu = round(svc.score(X_test, y_test), 4)
+    print('Test Accuracy of SVC = ', accu)
     # Check the prediction time for a single sample
     t=time.time()
     pickle.dump(svc, open( "svc.p", "wb" ))
     pickle.dump(X_scaler, open( "scaler.p", "wb" ))
-    return svc
+    return svc,accu
 
 def load():
     return pickle.load( open( "svc.p", "rb" ) ), pickle.load(open( "scaler.p", "rb" ))
